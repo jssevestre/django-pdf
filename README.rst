@@ -2,7 +2,7 @@
 django-pdf
 ==========
 
-A django MiddleWare to converte on-the-fly views' HTML output to PDF 
+A django MiddleWare to converte on-the-fly views' HTML output to PDF
 **without modifying your views.**
 
 -----
@@ -32,7 +32,7 @@ cp django_pdf to your project or in your PYTHON_PATH
 
 ** pip install will come **
 
-requierement
+requirement
 ------------
 
 http://github.com/chrisglass/xhtml2pdf/
@@ -42,27 +42,28 @@ settings.py
 
 1. add 'django_pdf' to INSTALLED_APPS
 
-2. add 'django_pdf.middleware.PdfMiddleware' to MIDDLEWARE_CLASSES 
+2. add 'django_pdf.middleware.PdfMiddleware' to MIDDLEWARE_CLASSES
 
 3. check that TEMPLATE_CONTEXT_PROCESSORS content is
-   
-        ("django.core.context_processors.auth",
-        "django.core.context_processors.debug",
-        "django.core.context_processors.i18n",
-        "django.core.context_processors.media",
-        "django.core.context_processors.request")
+
+::
+
+ ("django.core.context_processors.auth",
+  "django.core.context_processors.debug",
+  "django.core.context_processors.i18n",
+  "django.core.context_processors.media",
+  "django.core.context_processors.request")
 
 4. and add  "django_pdf.context_processors.check_format",before )
 
-
-configuration
+Configuration
 -------------
 
 You can customize in your settings.py
 
-REQUEST_FORMAT_NAME (default is ``format``)
-REQUEST_FORMAT_PDF_VALUE (default is ``pdf``)
-TEMPLATE_PDF_CHECK (default is ``DJANGO_PDF_OUTPUT``)
+* REQUEST_FORMAT_NAME (default is 'format')
+* REQUEST_FORMAT_PDF_VALUE (default is 'pdf')    
+* TEMPLATE_PDF_CHECK (default is 'DJANGO_PDF_OUTPUT')
 
 
 ---------------------------
@@ -72,19 +73,22 @@ Template tags and variables
 pdf or not pdf ?
 ----------------
 
-You may ask: "Wait! what if I don't want to include some parts of the HTML page in the PDF output? (like a menu)" 
+You may ask: "Wait! what if I don't want to include some parts of the HTML page in the PDF output? (like a menu)"
 You'd be right, and the answer is easy:
 Use the variable DJANGO_PDF_OUTPUT in your template which will be set to True if
 the PDF is requested and to False otherwise.
 
 Example:
-    {% if not DJANGO_PDF_OUTPUT %}
+
+::
+
+ {% if not DJANGO_PDF_OUTPUT %}
         <ul id="menu">
             <li>menu item</li>
             <li>menu item</li>
             <li>menu item</li>
         </ul>
-    {% endif %}
+ {% endif %}
 
 Also, you can use {% if DJANGO_PDF_OUTPUT %} to include some parts only in the PDF output.
 
