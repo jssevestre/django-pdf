@@ -32,17 +32,20 @@ def transform_to_pdf(response,pdfname):
     """
     call xhtml2pdf.pisa to convert html responce to pdf
     """
-    response['mimetype'] = 'application/pdf'
+    #response['mimetype'] = 'application/pdf'
 
     # TODO : on the fly filename from url
-    response['Content-Disposition'] = 'attachment; filename=%s.pdf' % pdfname
+    #response['Content-Disposition'] = 'attachment; filename=%s.pdf' % pdfname
 
     content = response.content
+    new_response = HttpResponse(content="",mimetype='application/pdf')
+    new_response['Content-Disposition'] = 'attachment; filename=%s.pdf' % pdfname
+    
     pdf = pisa.pisaDocument(StringIO.StringIO(content),
-            response, link_callback=fetch_resources)
+                            new_response, link_callback=fetch_resources)
 
     if not pdf.err:
-        return response
+        return new_response
     else:
         # TODO return error and redirect to default view
         return HttpResponse('We had some errors in pdfMiddleWare : \
