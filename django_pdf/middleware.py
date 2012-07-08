@@ -6,6 +6,7 @@ from xhtml2pdf import pisa
 import cStringIO as StringIO
 from django.http import HttpResponse
 from django.conf import settings
+import urllib
 import re
 
 REQUEST_FORMAT_NAME = getattr(settings, 'REQUEST_FORMAT_NAME', 'format')
@@ -57,7 +58,11 @@ class PdfMiddleware(object):
     """
     def process_response(self, request, response):
         reqformat = request.GET.get(REQUEST_FORMAT_NAME, None)
+        req_pdfname = request.GET.get("pdfname",None)
         if reqformat == REQUEST_FORMAT_PDF_VALUE:
-	    pdfname = '%s%s'%(PDF_BASE_NAME, request.path.replace('/','_'))
+            if req_pdfname:
+                pdfname = urllib.unquote(req_pdfname).replace('/','-')
+            else:
+                pdfname = '%s%s'%(PDF_BASE_NAME, request.path.replace('/','_'))
             response = transform_to_pdf(response,pdfname)
         return response

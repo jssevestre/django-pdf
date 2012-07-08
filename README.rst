@@ -17,7 +17,9 @@ It's still under development and need testing ,bug report, feature request, codi
 Usage
 -----
 
-Simply add `?format=pdf` to your url to get the pdf version of the page
+Simply add `?format=pdf` to your url to get the pdf version of the page.
+
+You can add a `pdfname` option to your url to specify a name for the generated pdf (without extension). Remember to urlencode pdfname. `/` chars are automatically converted to `-`.
 
 ------------
 Install
